@@ -42,6 +42,7 @@ def process(item):
 
 
 def main():
+    # IP yang digunakan oleh server
     Pyro4.config.HOST = "10.151.36.189:9090"
     dispatcher = Pyro4.core.Proxy("PYRONAME:kel2.distributed.dispatcher")
     print("This is worker %s" % WORKERNAME)

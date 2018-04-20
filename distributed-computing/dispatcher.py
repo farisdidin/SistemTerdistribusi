@@ -49,6 +49,7 @@ class DispatcherQueue(object):
 Pyro4.Daemon.serveSimple({
     DispatcherQueue: "example.distributed.dispatcher"
 },
-    host='10.151.252.116',
+#ip yang digunakan sebagai server (penyedia layanan)
+    host='10.151.252.116', 
     ns=True
 )
