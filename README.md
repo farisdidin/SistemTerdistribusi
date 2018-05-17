@@ -5,6 +5,7 @@
 * 5115100045 Rohana Qudus
 * 5115100066 Gusti Ngurah Satria Aryawan
 * 5115100118 M. Faris Didin Andiyar
+* 5115100141 Nahda Fauziyah Zahra
 
 ## Link
 1. [Tugas](/Tugas)
