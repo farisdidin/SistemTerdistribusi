@@ -1,3 +1,4 @@
+from __future__ import print_function
 import Pyro4
 import os
 import shutil
@@ -9,7 +10,7 @@ class Worker(object):
     sharingFolder = {}
 
     def __init__(self):
-        self.sharingFolder['folder'] = '/home/hana/Documents/Kuliah/Sister/sisTer/FP/worker1'
+        self.sharingFolder['folder'] = '/home/hana/Documents/Kuliah/Sister/Sister/FP/worker1'
 
     def isFolder(self, path):
         fullPath = self.sharingFolder['folder'] + path
@@ -81,7 +82,7 @@ class Worker(object):
             return err.replace(self.sharingFolder['folder'], ''), None
     
     def readFile(self, cwd, path=None):
-        flag, fullPath = self.notEmpty(path)
+        fullPath = self.notEmpty(path)
         data = ''
         with open(fullPath, 'rb') as file:
             data = file.read()
@@ -104,7 +105,7 @@ def main():
     Pyro4.Daemon.serveSimple ({
         Worker: "worker"
     },
-    ns = False, host = "127.0.0.1", port = 9001)
+    ns = False, host = "127.0.0.1", port = 7777)
 
 if __name__ == "__main__":
     main()
