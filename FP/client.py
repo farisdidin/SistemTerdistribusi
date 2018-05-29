@@ -6,7 +6,7 @@ def main():
 	uri = 'PYRO:middleware@127.0.0.1:9001'
 	middleware = Pyro4.Proxy(uri)
 	cmd = middleware.[fungsi waktu ngambil command]
-	cwd = 'folder'
+	cwd = '/'
 	args = []
 	while True:
 		print ('cli >> '+ cwd + ' ')
