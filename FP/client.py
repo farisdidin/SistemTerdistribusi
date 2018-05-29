@@ -2,9 +2,9 @@ import Pyro4
 import os
 import sys
 
-def readFile(data):
+def readFile(path):
 	print "read file"
-	with open(data,'rb') as f1:
+	with open(path,'rb') as f1:
 		buf=f1.read()
 			
 	return buf
@@ -27,21 +27,28 @@ def main():
 
 		if args[0] in cmd:
 			if args[0] == 'cd':
-				cwd = middleware.args(args, cwd)
+				status, cwd = middleware.args(args,cwd)
 
 			if args[0] == 'ls':
-				cwd = middleware.args(args, cwd)
+				status,results, cwd = middleware.args(args,cwd)
 				if(isinstance(results, list)):
 					for result in results:
 						print(result)
 				else:
 					print(results)
 					
-			if args[0] == 'rm' or args[0] == 'touch':
+			if args[0] == 'rm' or args[0] == 'touch' or args[0] == 'cp' or args[0] == 'mv':
 				cwd = middleware.args(args, cwd)
 
-			if args[0] == 'cp' or args[0] == 'mv':
-				cwd = middleware.args(args, cwd)
+			if args[0] == 'upload':
+				print args
+				# cwd = middleware.args(args,cwd)
+				data= readFile(args[1])
+				middleware.upload(args[1],data)
+				del args[:]
+
+
+		
 
 		elif args[0] == '':
 			continue

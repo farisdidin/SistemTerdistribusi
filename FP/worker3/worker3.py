@@ -10,7 +10,7 @@ class Worker(object):
     sharingFolder = {}
 
     def __init__(self):
-        self.sharingFolder['folder'] = '/home/didin/Project/SistemTerdistribusi/FP/worker1/'
+        self.sharingFolder['folder'] = '/home/didin/Project/SistemTerdistribusi/FP/worker3/' #/home/didin/Project/SistemTerdistribusi/FP/
 
     def isFolder(self, path):
         fullPath = self.sharingFolder['folder'] + path
@@ -107,7 +107,7 @@ def main():
     Pyro4.Daemon.serveSimple ({
         Worker: "worker"
     },
-    ns = False, host = "127.0.0.1", port = 9000)
+    ns = False, host = "127.0.0.1", port = 9002)
 
 if __name__ == "__main__":
     main()
