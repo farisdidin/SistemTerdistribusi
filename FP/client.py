@@ -47,8 +47,12 @@ def main():
 		else:
 			print ('server >> command \''+args[0]+'\' not found')
 
+
+<<<<<<< HEAD
 	data=readFile(nama)
 	middleware.upload(nama,data)
+=======
+>>>>>>> 48423e0311b1aab0d70f38ff81d50192a64ab602
 
 if __name__ == '__main__':
 	main()
