@@ -9,16 +9,12 @@ workers=[]
 @Pyro4.callback
 class Middleware(object):
   
-    # def readFile(self,data):
-    #     print "read file"
-    #     with open(data,'rb') as f1:
-    #         buf=f1.read()
-               
-    #         Middleware.binaryFile=buf
-    #     length = len(Middleware.binaryFile)
-    #     print length
-    #     # print Middleware.binaryFile
-    #     return buf
+    def __init__(self):
+        self.commands=['ls','cd','rm','upload']
+
+    def getCommands(self):
+        return self.commands
+        
     def upload(self,path,data):
         worker=workers[0]
         cwd='/'

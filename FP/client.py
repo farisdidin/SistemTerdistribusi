@@ -9,10 +9,15 @@ def readFile(data):
 			
 	return buf
 
+def writeFile(path,data):
+	with open(path,'wb') as f2:
+		buf = f2.write(data)
+	return buf
+
 def main():
 	uri = 'PYRO:middleware@127.0.0.1:8001'
 	middleware = Pyro4.Proxy(uri)
-	cmd = middleware.[fungsi waktu ngambil command]
+	cmd = middleware.getCommands()
 	cwd = '/'
 	args = []
 	while True:
@@ -48,11 +53,6 @@ def main():
 			print ('server >> command \''+args[0]+'\' not found')
 
 
-<<<<<<< HEAD
-	data=readFile(nama)
-	middleware.upload(nama,data)
-=======
->>>>>>> 48423e0311b1aab0d70f38ff81d50192a64ab602
 
 if __name__ == '__main__':
 	main()
