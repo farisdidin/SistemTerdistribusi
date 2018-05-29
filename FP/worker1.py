@@ -10,7 +10,7 @@ class Worker(object):
     sharingFolder = {}
 
     def __init__(self):
-        self.sharingFolder['folder'] = '/home/hana/Documents/Kuliah/Sister/Sister/FP/worker1'
+        self.sharingFolder['folder'] = '/home/didin/Project/SistemTerdistribusi/FP/worker1/'
 
     def isFolder(self, path):
         fullPath = self.sharingFolder['folder'] + path
@@ -70,6 +70,8 @@ class Worker(object):
             return err, None
 
     def createFile(self, cwd, path, data):
+        create = 'create'
+        print (create)
         fullPath = self.sharingFolder['folder'] + path
         if(os.path.isfile(fullPath)):
             return 'File already exists', None
@@ -105,7 +107,7 @@ def main():
     Pyro4.Daemon.serveSimple ({
         Worker: "worker"
     },
-    ns = False, host = "127.0.0.1", port = 7777)
+    ns = False, host = "127.0.0.1", port = 9000)
 
 if __name__ == "__main__":
     main()
