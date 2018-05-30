@@ -11,10 +11,11 @@ def readFile(path):
 
 def writeFile(path,data):
 	with open(path,'wb') as f2:
-		buf = f2.write(data)
+		buf = f2.write(data.encode('utf-8').strip())
 	return buf
 
 def main():
+	
 	uri = 'PYRO:middleware@127.0.0.1:8001'
 	middleware = Pyro4.Proxy(uri)
 	cmd = middleware.getCommands()
@@ -39,12 +40,25 @@ def main():
 					
 			if args[0] == 'rm' or args[0] == 'touch' or args[0] == 'cp' or args[0] == 'mv':
 				cwd = middleware.args(args, cwd)
+				hasilRead= readFile(args[1])
+				writeFile(args[2],hasilRead)
+				del args[:]
+				continue
 
 			if args[0] == 'upload':
 				print args
 				# cwd = middleware.args(args,cwd)
 				data= readFile(args[1])
 				middleware.upload(args[1],data)
+				
+				del args[:]
+				continue
+			
+			
+			if args[0] == 'download':
+				print args[1]
+				dataDownload = middleware.download(args[1])
+				writeFile(args[1],dataDownload)
 				del args[:]
 
 

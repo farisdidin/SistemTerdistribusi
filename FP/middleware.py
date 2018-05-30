@@ -11,7 +11,7 @@ workers=[]
 class Middleware(object):
   
     def __init__(self):
-        self.commands=['ls','cd','rm','upload','mv','cp']
+        self.commands=['ls','cd','rm','upload','mv','cp','download']
 
     def getCommands(self):
         return self.commands
@@ -24,6 +24,16 @@ class Middleware(object):
         worker.createFile(cwd,path,data)
         print 'sudah create'
     
+    def download(self,path):
+        numberServer=self.chooseWorker(path)
+        print numberServer
+        print path
+        worker=workers[numberServer]
+        cwd='/'
+        data = worker.readFile(cwd,path)
+        print 'download'
+        return data
+
     def chooseWorker(self,path):
         self.hashResult = hashlib.md5(path).hexdigest()
         self.number = ord(self.hashResult[-1:])
@@ -49,7 +59,7 @@ class Middleware(object):
 def connectWorker():
     for worker in listWorkers:
         workers.append(Pyro4.Proxy(worker))
-    print workers    
+    # print workers    
     
     # def commands(self,command,target):
     #     if command == 'ls':
@@ -64,10 +74,10 @@ def connectWorker():
 def main():
     # listenToWorker()
     connectWorker()
-    cwd = '/'
-    path = 'file.txt'
-    worker=workers[0]
-    worker.touch(cwd,path)
+    # cwd = '/'
+    # path = 'file.txt'
+    # worker=workers[0]
+    # worker.touch(cwd,path)
 
     Pyro4.Daemon.serveSimple(
         {

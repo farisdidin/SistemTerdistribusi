@@ -83,9 +83,19 @@ class Worker(object):
             err = str(ex)
             return err.replace(self.sharingFolder['folder'], ''), None
     
-    def readFile(self, cwd, path=None):
-        fullPath = self.notEmpty(path)
-        data = ''
+    # def readFile(self, cwd, path=None):
+    #     fullPath = self.notEmpty(path)
+    #     data = ''
+    #     with open(fullPath, 'rb') as file:
+    #         data = file.read()
+    #     return data
+    
+    def readFile(self, cwd, path):
+        # fullPath = self.notEmpty(path)
+        read = 'read'
+        print (read)
+        fullPath = path
+        data = None
         with open(fullPath, 'rb') as file:
             data = file.read()
         return data
