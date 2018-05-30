@@ -123,6 +123,17 @@ class Worker(object):
 
         return data
 
+    def readFileDownload(self, cwd, path):
+         # fullPath = self.notEmpty(path)
+        read = 'read'
+        print (read)
+        fullPath = path
+        print (fullPath)
+        data = None
+        with open(path, 'rb') as file:
+            data = file.read()
+        return data
+
     def touch(self, cwd, path=None):
         full_path = self.sharing_folder['base']+path
         print(full_path)

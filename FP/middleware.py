@@ -12,7 +12,7 @@ workers = []
 class Middleware(object):
 
     def __init__(self):
-        self.commands = ['ls','cd','rm','mv','touch','exit','cp', 'upload']
+        self.commands = ['ls','cd','rm','mv','touch','exit','cp', 'upload', 'download']
         return
 
     def getCommands(self):
@@ -33,6 +33,16 @@ class Middleware(object):
         worker.createFile(cwd, file, data)
         p = '>> Upload ' + file + ' berhasil! file disimpan di server ' + repr(numberServerBak+1)
         print (p)
+
+    def download(self, file):
+        numberServer=self.chooseWorker(file)
+        print numberServer
+        print file
+        worker = workers[numberServer]
+        cwd = '/'
+        data = worker.readFileDownload(cwd, file)
+        print 'download'
+        return data
 
     def chooseWorker(self, file):
         self.hashResult = hashlib.md5(file).hexdigest()

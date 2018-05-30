@@ -8,6 +8,11 @@ def readFile(file):
         buf=f1.read()
     return buf
 
+def writeFile(file,data):
+    with open(file,'wb') as f2:
+        buf = f2.write(data.encode('utf-8').strip())
+    return buf
+
 def main():
     uri = 'PYRO:middleware@127.0.0.1:8001'
     middleware = Pyro4.Proxy(uri)
@@ -49,14 +54,22 @@ def main():
             if args[0] == 'upload':
                 print '>> ' + str(args)
                 print '>> Sedang mengupload...'
-                count = 0
-                if len(args) > 2:
+                count = 1
+                if (len(args)>=2):
                     for data in args:
-                        count+=1
                         data = readFile(args[count])
                         middleware.upload(args[count],data)
                         print '>> File ' + args[count] + ' berhasil di upload!'
+                        count+=1
 
+                del args[:]
+                continue
+
+            if args[0] == 'download':
+                print '>> ' + str(args)
+                print '>> Sedang mendownload...'
+                dataDownload = middleware.download(args[1])
+                writeFile(args[1],dataDownload)
                 del args[:]
 
         elif args[0] == '':
