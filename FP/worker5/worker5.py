@@ -10,7 +10,7 @@ class Worker(object):
     sharing_folder = {}
 
     def __init__(self):
-        self.sharing_folder['base'] = '/home/mocatfrio/Documents/vfs-pyro/worker5'
+        self.sharing_folder['base'] = '/home/mocatfrio/Documents/SistemTerdistribusi/FP/worker5'
 
     def isExistFolder(self, path):
         full_path = self.sharing_folder['base']+path
@@ -138,6 +138,7 @@ class Worker(object):
 
 
 def main():
+    # Pyro4.config.HOST="10.151.253.198:9000"
     Pyro4.Daemon.serveSimple(
         {
             Worker: "worker"
