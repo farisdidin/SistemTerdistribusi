@@ -25,12 +25,12 @@ Dengan spesifikasi sebagai berikut:
 
 ## Pembagian Tugas
 Client:
-- Nahda Fauziyah Zahra (5115100141)
+* Nahda Fauziyah Zahra (5115100141)
 
 Middleware:
-- Adinda
-- Hafara Firdausi (5115100043)
-- Satria Aryawan (5115100066)
+* M. Faris Didin Andiyar (5115100118) 
+* Hafara Firdausi (5115100043)
+* Satria Aryawan (5115100066)
 
 Worker:
 - Rohana Qudus (5114100045)
