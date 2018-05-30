@@ -9,7 +9,7 @@ def readFile(file):
     return buf
 
 def main():
-    uri = 'PYRO:middleware@127.0.0.1:8001'
+    uri = 'PYRO:middleware@0.0.0.0:8001'
     middleware = Pyro4.Proxy(uri)
     commands = middleware.getCommands()
     cwd = '/'

@@ -4,7 +4,6 @@ import os
 import hashlib
 
 list_workers = ['PYRO:worker@127.0.0.1:9000','PYRO:worker@127.0.0.1:9001','PYRO:worker@127.0.0.1:9002','PYRO:worker@127.0.0.1:9003','PYRO:worker@127.0.0.1:9004']
-# list_workers = ['PYRO:worker@127.0.0.1:9000','PYRO:worker@127.0.0.1:9001']
 workers = []
 
 
@@ -21,15 +20,28 @@ class Middleware(object):
 
     def upload(self, file, data):
         numberServer = self.chooseWorker(file)
+        numberServerBak = self.chooseWorkerBak(file)
+        # menyimpan di server primary
         worker = workers[numberServer]
         cwd = '/'
         worker.createFile(cwd, file, data)
         p = '>> Upload ' + file + ' berhasil! file disimpan di server ' + repr(numberServer+1)
         print (p)
+        # menyimpan di server primary
+        worker = workers[numberServerBak]
+        cwd = '/'
+        worker.createFile(cwd, file, data)
+        p = '>> Upload ' + file + ' berhasil! file disimpan di server ' + repr(numberServerBak+1)
+        print (p)
 
     def chooseWorker(self, file):
         self.hashResult = hashlib.md5(file).hexdigest()
         self.number = ord(self.hashResult[-1:])
+        return self.number%5
+
+    def chooseWorkerBak(self, file):
+        self.hashResult = hashlib.md5(file).hexdigest()
+        self.number = ord(self.hashResult[-1:])+3
         return self.number%5
 
     def generateStructureFolder(self, cwd, args, path_req=''):
@@ -529,7 +541,7 @@ def main():
         {
             Middleware: "middleware"
         },
-        ns=False, host="127.0.0.1", port=8001)
+        ns=False, host="0.0.0.0", port=8001)
 
 if __name__ == "__main__":
     main()
