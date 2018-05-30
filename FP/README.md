@@ -26,8 +26,10 @@ Dengan spesifikasi sebagai berikut:
 ## Pembagian Tugas
 Client:
 - Nahda Fauziyah Zahra (5115100141)
+
 Middleware:
 - Adinda
 - Hafara Firdausi (5115100043)
+
 Worker:
 - Rohana Qudus (5114100045)
