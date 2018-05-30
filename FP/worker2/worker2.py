@@ -1,3 +1,4 @@
+
 from __future__ import print_function
 import Pyro4
 import os
@@ -10,7 +11,7 @@ class Worker(object):
     sharing_folder = {}
 
     def __init__(self):
-        self.sharing_folder['base'] = '/home/mocatfrio/Documents/SistemTerdistribusi/FP/worker2'
+        self.sharing_folder['base'] = '/home/didin/Project/demoSister/SistemTerdistribusi/FP/worker2'
 
     def isExistFolder(self, path):
         full_path = self.sharing_folder['base']+path

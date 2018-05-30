@@ -10,7 +10,7 @@ class Worker(object):
     sharing_folder = {}
 
     def __init__(self):
-        self.sharing_folder['base'] = '/home/mocatfrio/Documents/SistemTerdistribusi/FP/worker4'
+        self.sharing_folder['base'] = '/home/didin/Project/demoSister/SistemTerdistribusi/FP/worker4'
 
     def isExistFolder(self, path):
         full_path = self.sharing_folder['base']+path

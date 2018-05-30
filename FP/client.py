@@ -14,6 +14,7 @@ def writeFile(file,data):
     return buf
 
 def main():
+    #uri = 'PYRO:middleware@10.151.253.198:8001'
     uri = 'PYRO:middleware@127.0.0.1:8001'
     middleware = Pyro4.Proxy(uri)
     commands = middleware.getCommands()
@@ -55,14 +56,28 @@ def main():
                 print '>> ' + str(args)
                 print '>> Sedang mengupload...'
                 count = 0
-                for data in args:
-                    count+=1
-                    data = readFile(args[count])
-                    middleware.upload(args[count],data)
-                    print '>> File ' + args[count] + ' berhasil di upload!'
-                    print count
-                    if(count==len(args)-1):
-                        break
+                #upload folder
+                currentPath = os.getcwd()
+                pathDownload = currentPath+'/'+args[1]+'/'
+                if os.path.isdir(pathDownload):
+                    fileToUpload=[]
+                    dirs = os.listdir(pathDownload)
+                    for file in dirs:
+                        #fileToUpload.append(file)
+                        fileDownload = args[1]+'/'+file
+                        data = readFile(fileDownload)
+                        middleware.upload(file,data)
+                else:
+                    for data in args:
+                        count+=1
+                        data = readFile(args[count])
+                        middleware.upload(args[count],data)
+                        print '>> File ' + args[count] + ' berhasil di upload!'
+                        print count
+                        if(count==len(args)-1):
+                            break
+                    
+
 
                 del args[:]
                 continue
