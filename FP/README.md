@@ -4,7 +4,7 @@ Dengan spesifikasi sebagai berikut:
 1. Bisa melihat isi file dari sebuah storage (spesifik)
 2. Bisa melihat isi file dari semua storage yg aktif
 3. Bisa mengupload file ke storage. Penentuan storage yg mana yg akan jadi tujuan upload bebas.
-4. Bisa mengupload file ke storeage secara spesifik.
+4. Bisa mengupload file ke storage secara spesifik.
 5. Bisa mengunduh file dari storage
 6. Bisa berpindah direktori
 7. Bisa mengcopy file di dalam storage itu sendiri
@@ -33,4 +33,28 @@ Middleware:
 * Satria Aryawan (5115100066)
 
 Worker:
-- Rohana Qudus (5114100045)
+* Rohana Qudus (5114100045)
+
+
+## Langkah Testing
+
+1. Ubah ```sharing_folder['base']```pada masing-masing worker sesuai dengan PC dimana worker tersebut dijalankan. Worker bekerja sebagai server
+
+    p.s. Cara penulisan diakhir full path tidak perlu diberi slash '/'. Contoh: ```'/home/mocatfrio/Documents/SistemTerdistribusi/FP/worker1'```
+
+2. Ubah **nameserver** pada ```def main()```
+
+    ```python
+    def main()
+        # Pyro4.config.HOST="10.151.253.198:9000"
+        Pyro4.Daemon.serveSimple(
+            {
+                Worker: "worker"
+            },
+            ns=False, host="10.151.253.198", port=9000)
+    ```
+
+    * Uncomment ```Pyro4.config.HOST="10.151.253.198:9000"``` dan sesuaikan dengan IP masing-masing PC. Boleh menggunakan port yang sama antar worker
+    * Sesuaikan ```host``` sesuai dengan IP PC dan port-nya bebas, asal sama dengan ```Pyro4.config.HOST```
+
+3. CEMUNGUD

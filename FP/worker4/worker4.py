@@ -138,6 +138,7 @@ class Worker(object):
 
 
 def main():
+    # Pyro4.config.HOST="10.151.253.198:9000"
     Pyro4.Daemon.serveSimple(
         {
             Worker: "worker"
