@@ -54,13 +54,15 @@ def main():
             if args[0] == 'upload':
                 print '>> ' + str(args)
                 print '>> Sedang mengupload...'
-                count = 1
-                if (len(args)>=2):
-                    for data in args:
-                        data = readFile(args[count])
-                        middleware.upload(args[count],data)
-                        print '>> File ' + args[count] + ' berhasil di upload!'
-                        count+=1
+                count = 0
+                for data in args:
+                    count+=1
+                    data = readFile(args[count])
+                    middleware.upload(args[count],data)
+                    print '>> File ' + args[count] + ' berhasil di upload!'
+                    print count
+                    if(count==len(args)-1):
+                        break
 
                 del args[:]
                 continue
