@@ -1,65 +1,66 @@
+import sys
 import Pyro4
 import os
-import sys
 
-def readFile(path):
-	print "read file"
-	with open(path,'rb') as f1:
-		buf=f1.read()
-			
-	return buf
-
-def writeFile(path,data):
-	with open(path,'wb') as f2:
-		buf = f2.write(data)
-	return buf
+def readFile(file):
+    print ">> Membaca file"
+    with open(file,'rb') as f1:
+        buf=f1.read()
+    return buf
 
 def main():
-	uri = 'PYRO:middleware@127.0.0.1:8001'
-	middleware = Pyro4.Proxy(uri)
-	cmd = middleware.getCommands()
-	cwd = '/'
-	args = []
-	while True:
-		print ('cli >> '+ cwd + ' ')
-		command = raw_input()
-		args.extend(command.split())
+    uri = 'PYRO:middleware@127.0.0.1:8001'
+    middleware = Pyro4.Proxy(uri)
+    commands = middleware.getCommands()
+    cwd = '/'
+    while True:
+        args = []
+        print ('cli >> '+ cwd ),
+        arg = raw_input()
+        args.extend(arg.split(' '))
 
-		if args[0] in cmd:
-			if args[0] == 'cd':
-				status, cwd = middleware.args(args,cwd)
+        if args[0] in commands:
+            if args[0] == 'exit':
+                break
 
-			if args[0] == 'ls':
-				status,results, cwd = middleware.args(args,cwd)
-				if(isinstance(results, list)):
-					for result in results:
-						print(result)
-				else:
-					print(results)
-					
-			if args[0] == 'rm' or args[0] == 'touch' or args[0] == 'cp' or args[0] == 'mv':
-				cwd = middleware.args(args, cwd)
+            if args[0] == 'cd':
+                errors, results, cwd = middleware.args(args, cwd)
+                if(errors is not None):
+                    print('Server: '+errors)
 
-			if args[0] == 'upload':
-				print args
-				# cwd = middleware.args(args,cwd)
-				data= readFile(args[1])
-				middleware.upload(args[1],data)
-				del args[:]
+            if args[0] == 'ls':
+                errors, results, cwd = middleware.args(args, cwd)
+                if(errors is not None):
+                    print('Server: '+errors)
+                else:
+                    if(isinstance(results, list)):
+                        for result in results:
+                            print(result)
+                    else:
+                        print(results)
+
+            if args[0] == 'rm' or args[0] == 'touch' or args[0] == 'cp' or args[0] == 'mv':
+                errors, results, cwd = middleware.args(args, cwd)
+                if(errors is not None):
+                    print('Server: '+errors)
+                else:
+                    print('Server: '+results)
+
+            if args[0] == 'upload':
+                print '>> ' + str(args)
+                print '>> Sedang mengupload...'
+                data = readFile(args[1])
+                middleware.upload(args[1],data)
+                print '>> File ' + args[1] + ' berhasil di upload!'
+                del args[:]
+
+        elif args[0] == '':
+            continue
+
+        else:
+            print('server: command not found: '+args[0])
 
 
-		
 
-		elif args[0] == '':
-			continue
-		
-		elif args[0] == 'quit':
-			break
-
-		else:
-			print ('server >> command \''+args[0]+'\' not found')
-
-
-
-if __name__ == '__main__':
-	main()
+if __name__ == "__main__":
+    main()
