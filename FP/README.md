@@ -30,6 +30,7 @@ Client:
 Middleware:
 - Adinda
 - Hafara Firdausi (5115100043)
+- Satria Aryawan (5115100066)
 
 Worker:
 - Rohana Qudus (5114100045)
