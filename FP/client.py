@@ -9,7 +9,7 @@ def readFile(file):
     return buf
 
 def main():
-    uri = 'PYRO:middleware@0.0.0.0:8001'
+    uri = 'PYRO:middleware@127.0.0.1:8001'
     middleware = Pyro4.Proxy(uri)
     commands = middleware.getCommands()
     cwd = '/'
@@ -51,7 +51,7 @@ def main():
                 print '>> Sedang mengupload...'
                 count = 0
                 if len(args) > 2:
-                    for data in args
+                    for data in args:
                         count+=1
                         data = readFile(args[count])
                         middleware.upload(args[count],data)
