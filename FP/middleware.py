@@ -1,10 +1,12 @@
 import sys
 import Pyro4
+import Pyro4.errors
 import os
 import hashlib
 
 list_workers = ['PYRO:worker@127.0.0.1:9000','PYRO:worker@127.0.0.1:9001','PYRO:worker@127.0.0.1:9002','PYRO:worker@127.0.0.1:9003','PYRO:worker@127.0.0.1:9004']
 workers = []
+statusWorker=[]
 
 
 @Pyro4.expose
@@ -12,7 +14,7 @@ workers = []
 class Middleware(object):
 
     def __init__(self):
-        self.commands = ['ls','cd','rm','mv','touch','exit','cp', 'upload', 'download']
+        self.commands = ['ls','cd','rm','mv','touch','exit','cp', 'upload', 'download','check']
         return
 
     def getCommands(self):
@@ -31,14 +33,20 @@ class Middleware(object):
         worker = workers[numberServerBak]
         cwd = '/'
         worker.createFile(cwd, file, data)
-        p = '>> Upload ' + file + ' berhasil! file disimpan di server ' + repr(numberServerBak+1)
+        p = '>> Upload ' + file + ' berhasil! file disimpan di server Backup ' + repr(numberServerBak+1)
         print (p)
 
     def download(self, file):
+        self.checkConnection()
         numberServer=self.chooseWorker(file)
+        numberServerBak = self.chooseWorkerBak(file)
+        if statusWorker[numberServer] == '1':
+            worker = workers[numberServer]
+        else:
+            worker = workers[numberServerBak]            
+                                
         print numberServer
         print file
-        worker = workers[numberServer]
         cwd = '/'
         data = worker.readFileDownload(cwd, file)
         print 'download'
@@ -94,7 +102,7 @@ class Middleware(object):
                     return cwd_fix
                 else:
                     temp_cwds.reverse()
-                    counter=1;
+                    counter=1
                     cwd_fix = '/'
                     flag_break = 0;
                     for i in range(0, len(temp_cwds)-1):
@@ -538,7 +546,22 @@ class Middleware(object):
 
         else:
             return None, 'Perintah tidak ada', cwd
-
+    
+    def checkConnection(self):
+        del statusWorker[:]
+        number = 1
+        for worker in workers:
+            with worker as p:
+                try:
+                    p._pyroBind()
+                    print 'Worker '+str(number)+' is ON'
+                    statusWorker.append('1')
+                except Pyro4.errors.CommunicationError:
+                    print 'Worker '+str(number)+' is OFF'
+                    statusWorker.append('0')
+            number +=1
+        print '-----------------'
+        print statusWorker
 
 def listenToWorker():
     for list_worker in list_workers:
@@ -552,6 +575,19 @@ def main():
             Middleware: "middleware"
         },
         ns=False, host="127.0.0.1", port=8001)
+    # while True:
+    #     command = raw_input()
+    #     if command == 'check':
+    #         middleware = Middleware()
+    #         middleware.checkConnection()
+    #         print statusWorker
+    #     elif command == 'break':
+    #         break
+            
+            
+    
+    
+    
 
 if __name__ == "__main__":
     main()

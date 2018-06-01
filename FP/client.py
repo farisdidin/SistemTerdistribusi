@@ -29,12 +29,12 @@ def main():
             if args[0] == 'exit':
                 break
 
-            if args[0] == 'cd':
+            elif args[0] == 'cd':
                 errors, results, cwd = middleware.args(args, cwd)
                 if(errors is not None):
                     print('Server: '+errors)
 
-            if args[0] == 'ls':
+            elif args[0] == 'ls':
                 errors, results, cwd = middleware.args(args, cwd)
                 if(errors is not None):
                     print('Server: '+errors)
@@ -45,14 +45,14 @@ def main():
                     else:
                         print(results)
 
-            if args[0] == 'rm' or args[0] == 'touch' or args[0] == 'cp' or args[0] == 'mv':
+            elif args[0] == 'rm' or args[0] == 'touch' or args[0] == 'cp' or args[0] == 'mv':
                 errors, results, cwd = middleware.args(args, cwd)
                 if(errors is not None):
                     print('Server: '+errors)
                 else:
                     print('Server: '+results)
 
-            if args[0] == 'upload':
+            elif args[0] == 'upload':
                 print '>> ' + str(args)
                 print '>> Sedang mengupload...'
                 count = 0
@@ -82,11 +82,15 @@ def main():
                 del args[:]
                 continue
 
-            if args[0] == 'download':
+            elif args[0] == 'download':
                 print '>> ' + str(args)
                 print '>> Sedang mendownload...'
                 dataDownload = middleware.download(args[1])
                 writeFile(args[1],dataDownload)
+                del args[:]
+            
+            elif args[0] == 'check':
+                middleware.checkConnection()
                 del args[:]
 
         elif args[0] == '':
