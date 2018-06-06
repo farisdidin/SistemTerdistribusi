@@ -11,7 +11,7 @@ class Worker(object):
     sharing_folder = {}
 
     def __init__(self):
-        self.sharing_folder['base'] = '/home/didin/Project/demoSister/SistemTerdistribusi/FP/worker2'
+        self.sharing_folder['base'] = os.getcwd() #'/home/didin/Project/demoSister/SistemTerdistribusi/FP/worker2'
 
     def isExistFolder(self, path):
         full_path = self.sharing_folder['base']+path

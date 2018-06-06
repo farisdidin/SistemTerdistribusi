@@ -10,7 +10,7 @@ class Worker(object):
     sharing_folder = {}
 
     def __init__(self):
-        self.sharing_folder['base'] = '/home/didin/Project/demoSister/SistemTerdistribusi/FP/worker1'
+        self.sharing_folder['base'] = os.getcwd() #'/home/didin/Project/demoSister/SistemTerdistribusi/FP/worker1'
 
     def isExistFolder(self, path):
         full_path = self.sharing_folder['base']+path
@@ -150,6 +150,10 @@ class Worker(object):
 
 def main():
     # Pyro4.config.HOST="10.151.253.198:9000"
+    worker = Worker()
+    print (worker.sharing_folder['base'])
+    cwd = os.getcwd()
+    print (cwd)
     Pyro4.Daemon.serveSimple(
         {
             Worker: "worker"
